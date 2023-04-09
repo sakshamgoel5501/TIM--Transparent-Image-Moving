@@ -1,0 +1,130 @@
+.font-link-main {
+    font-family: 'Rubik Iso';
+    text-align: center;
+    margin-top: 100vw;
+    font-size: 2vw;
+}
+
+.font-link-sub {
+    font-family: 'Shantell Sans';
+    text-align: center;
+    margin-top: 15%;
+}
+
+
+.text-box {
+    position: absolute;
+    top: 35%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align:center;
+}
+
+.heading-primary {
+    color:#333;
+    text-transform: uppercase;
+}
+
+.heading-primary-main {
+    display: block;
+    font-size: 60px;
+    font-weight: 400;
+    letter-spacing: 35px;
+    color: rgb(24, 64, 100);
+/*  Animation decalaration   */
+    animation-name: moveInleft;
+    animation-duration: 3s;
+}
+
+.heading-primary-sub {
+    display: block;
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: 13px;
+    color: rgb(51, 98, 138);
+
+    animation-name: moveInRight;
+    animation-duration: 3s;
+}
+
+@keyframes moveInleft {
+    0% {
+        opacity: 0;
+        transform: translateX(-100px);
+    }
+
+    80% {
+        transform: translateX(10px);
+    }
+    100% {
+        opacity: 1;
+        transform: translate(0);
+    }
+}
+
+@keyframes moveInRight {
+    0% {
+        opacity: 0;
+        transform: translateX(100px);
+    }
+
+    80% {
+        transform: translateX(-10px);
+    }
+    
+    100% {
+        opacity: 1;
+        transform: translate(0);
+    }
+}
+
+.signIn {
+    color: aliceblue;
+    margin-top: 60%;
+    margin-left: 33vw;
+    font-size: 2vw;
+    font-family: Arial, Helvetica, sans-serif;
+    border: none;
+    padding: 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    cursor: pointer;
+    margin-left: 27vw;
+    background-color: #863c3c;
+    box-shadow: #333;
+    -webkit-box-shadow: 0 0 5px rgb(0,0,0);
+    -moz-box-shadow: 0 0 5px rgb(0,0,0);
+    opacity: 0.8;
+    transition: 0.3s;
+}
+
+.signUp {
+    color: aliceblue;
+    margin-top: 60%;
+    margin-left: 1vw;
+    font-size: 2vw;
+    font-family: Arial, Helvetica, sans-serif;
+    border: none;
+    padding: 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    cursor: pointer;
+    margin-left: 5vw;
+    background-color: #863c3c;
+    box-shadow: #333;
+    -webkit-box-shadow: 0 0 5px rgb(0,0,0);
+    -moz-box-shadow: 0 0 5px rgb(0,0,0);
+    opacity: 0.8;
+    transition: 0.3s;
+}
+
+.signIn:hover {opacity: 1}
+.signUp:hover {opacity: 1}
+
+.form {
+    margin-left: 35%;
+    margin-top: 5%;
+}
+

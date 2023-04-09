@@ -1,0 +1,26 @@
+.Grid {
+    font-family: sans-serif;
+    text-align: center;
+}
+
+.my-span{
+    display: flex;
+    width:  77px;
+    height: 77px;
+    background-image: url('');
+    background-size: contain;
+    background-repeat: no-repeat;  
+}
+
+.positionBlocks {
+    background-color: rgb(201, 195, 195);
+    box-shadow: #6c0b0b;
+    -webkit-box-shadow: 0 0 5px rgb(0,0,0);
+    -moz-box-shadow: 0 0 5px rgb(0,0,0);
+    opacity: 0.8;
+    transition: 0.3s;
+}
+
+.positionBlocks:hover {opacity: 1}
+
+

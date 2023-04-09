@@ -1,0 +1,106 @@
+.Grid {
+    font-family: sans-serif;
+    text-align: center;
+}
+
+.up {
+    color: aliceblue;
+    margin-top: 10%;
+    margin-left: 1vw;
+    font-size: 2vw;
+    font-family: Arial, Helvetica, sans-serif;
+    border: none;
+    padding: 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    cursor: pointer;
+    background-color: #863c3c;
+    box-shadow: #333;
+    -webkit-box-shadow: 0 0 5px rgb(0,0,0);
+    -moz-box-shadow: 0 0 5px rgb(0,0,0);
+    opacity: 0.8;
+    transition: 0.3s;
+}
+
+.down {
+    color: aliceblue;
+    margin-top: 10%;
+    margin-left: 1vw;
+    font-size: 2vw;
+    font-family: Arial, Helvetica, sans-serif;
+    border: none;
+    padding: 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    cursor: pointer;
+    background-color: #863c3c;
+    box-shadow: #333;
+    -webkit-box-shadow: 0 0 5px rgb(0,0,0);
+    -moz-box-shadow: 0 0 5px rgb(0,0,0);
+    opacity: 0.8;
+    transition: 0.3s;
+}
+
+.left {
+    color: aliceblue;
+    margin-top: 10%;
+    margin-left: 1vw;
+    font-size: 2vw;
+    font-family: Arial, Helvetica, sans-serif;
+    border: none;
+    padding: 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    cursor: pointer;
+    background-color: #863c3c;
+    box-shadow: #333;
+    -webkit-box-shadow: 0 0 5px rgb(0,0,0);
+    -moz-box-shadow: 0 0 5px rgb(0,0,0);
+    opacity: 0.8;
+    transition: 0.3s;
+}
+
+.right {
+    color: aliceblue;
+    margin-top: 10%;
+    margin-left: 1vw;
+    font-size: 2vw;
+    font-family: Arial, Helvetica, sans-serif;
+    border: none;
+    padding: 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    cursor: pointer;
+    background-color: #863c3c;
+    box-shadow: #333;
+    -webkit-box-shadow: 0 0 5px rgb(0,0,0);
+    -moz-box-shadow: 0 0 5px rgb(0,0,0);
+    opacity: 0.8;
+    transition: 0.3s;
+}
+
+.up:hover {opacity: 1}
+.down:hover {opacity: 1}
+.left:hover {opacity: 1}
+.right:hover {opacity: 1}
+
+.my-span{
+    display: flex;
+    width:  77px;
+    height: 77px;
+    background-image: url('');
+    background-size: contain;
+    background-repeat: no-repeat;  
+}
+
+.success {
+    color: green;
+}
+
+
+
+
