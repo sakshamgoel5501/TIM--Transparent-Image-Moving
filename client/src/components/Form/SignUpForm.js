@@ -47,20 +47,42 @@ const SignUpForm = ({ currentId, setCurrentId }) => {
         const rowOne = [];
         const rowTwo = [];
         const rowThree = [];
+        const rowFour=[];
+        const rowFive=[];
 
         rowOne.push(0);
         rowOne.push(1);
         rowOne.push(2);
-
-        rowTwo.push(3);
-        rowTwo.push(4);
-        rowTwo.push(5);
-
-        rowThree.push(6);
-        rowThree.push(7);    
-        rowThree.push(8);
+        rowOne.push(3);
+        rowOne.push(4);
         
-        return [rowOne, rowTwo, rowThree];
+        rowTwo.push(5);
+        rowTwo.push(6);
+        rowTwo.push(7);
+        rowTwo.push(8);
+        rowTwo.push(9);
+
+        rowThree.push(10);
+        rowThree.push(11);    
+        rowThree.push(12);
+        rowThree.push(13);
+        rowThree.push(14);
+        
+
+        rowFour.push(15);
+        rowFour.push(16);
+        rowFour.push(17);
+        rowFour.push(18);
+        rowFour.push(19);
+
+        rowFive.push(20);
+        rowFive.push(21);
+        rowFive.push(22);
+        rowFive.push(23);
+        rowFive.push(24);
+
+        
+        return [rowOne, rowTwo, rowThree,rowFour,rowFive];
     };
 
     const getPuzzle = () => {
@@ -127,7 +149,7 @@ const SignUpForm = ({ currentId, setCurrentId }) => {
                 <form autoComplete="off" noValidate className={`${classes.root} ${classes.form}`} onSubmit={handleSubmit}>
                     <Typography variant="h6">Secure Authentication</Typography>
                     <TextField name="username" variant="outlined" label="Username" fullWidth value={postData.username} onChange={(e) => setPostData({ ...postData, username: e.target.value })} />
-                    <div className={classes.fileInput}> <FileBase type="file" multiple={false} onDone={({base64}) => setPostData({ ...postData, selectedFile: base64 })} /> </div>
+                    <div className={classes.fileInput}> <FileBase type="file" multiple={true} onDone={({base64}) => setPostData({ ...postData, selectedFile: base64 })} /> </div>
                     {/* <ChoosePosition name="targetPosition" value={postData.targetPosition} onChange={() => setPostData({ ...postData, targetPosition: selectedPosition })} /> */}
                     <ChoosePosition />
                     <Button className={classes.buttonSubmit} variant="contained" color="primary" size="large" type="submit" fullWidth>Submit</Button>
