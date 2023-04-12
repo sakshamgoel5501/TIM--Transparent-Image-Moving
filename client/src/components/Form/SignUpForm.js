@@ -6,12 +6,12 @@ import useStyles from './styles';
 import { createPost, updatePost } from '../../actions/posts';
 import Puzzle from '../Puzzle/Puzzle.js'
 import './layoutSignUp.css';
-import DropDown from "./DropDown.js";
+import "./DropDown.css";
 
-var securityRounds = 3;
+var securityRounds = 1;
 
 const SignUpForm = ({ currentId, setCurrentId }) => {
-    const [postData, setPostData] = useState({ username: '', selectedFile: '', targetPosition: 0, securityLevels: 1 });
+    const [postData, setPostData] = useState({ username: '', selectedFile1: '', targetPosition1: -1, selectedFile2: '', targetPosition2: -1, selectedFile3: '', targetPosition3: -1, selectedFile4: '', targetPosition4: -1, selectedFile5: '', targetPosition5: -1, securityLevels: 1 });
     const post = useSelector((state) => (currentId ? state.posts.find((message) => message._id === currentId) : null));
     const dispatch = useDispatch();
     const classes = useStyles();
@@ -22,7 +22,7 @@ const SignUpForm = ({ currentId, setCurrentId }) => {
 
     const clear = () => {
         // setCurrentId(0);
-        setPostData({ username: '', selectedFile: '', targetPosition: 0, securityLevels: 1 });
+        setPostData({ username: '', selectedFile1: '', targetPosition1: -1, selectedFile2: '', targetPosition2: -1, selectedFile3: '', targetPosition3: -1, selectedFile4: '', targetPosition4: -1, selectedFile5: '', targetPosition5: -1, securityLevels: 1 });
     }
 
     const handleSubmit = (e) => {
@@ -42,6 +42,91 @@ const SignUpForm = ({ currentId, setCurrentId }) => {
 
     const [showAlert, setShowAlert] = useState(false);
     const [showForm, setShowForm] = useState(true);
+
+
+    // ------------------------------------------DropDown------------------------------------------------------------
+    const options = [
+        { value: "1", label: "1 Security Level" },
+        { value: "2", label: "2 Security Levels" },
+        { value: "3", label: "3 Security Levels" },
+        { value: "4", label: "4 Security Levels" },
+        { value: "5", label: "5 Security Levels" }
+    ];
+    
+    const Icon = () => {
+        return (
+            <svg height="20" width="20" viewBox="0 0 20 20">
+                <path d="M4.516 7.548c0.436-0.446 1.043-0.481 1.576 0l3.908 3.747 3.908-3.747c0.533-0.481 1.141-0.446 1.574 0 0.436 0.445 0.408 1.197 0 1.615-0.406 0.418-4.695 4.502-4.695 4.502-0.217 0.223-0.502 0.335-0.787 0.335s-0.57-0.112-0.789-0.335c0 0-4.287-4.084-4.695-4.502s-0.436-1.17 0-1.615z"></path>
+            </svg>
+        );
+    };
+      
+    const DropDown = ({ placeHolder, options }) => {
+        const [showMenu, setShowMenu] = useState(false);
+        const [selectedValue, setSelectedValue] = useState(null);
+      
+        useEffect(() => {
+            const handler = () => setShowMenu(false);
+            window.addEventListener("click", handler);
+            return () => {
+                window.removeEventListener("click", handler);
+            };
+        });
+      
+        const handleInputClick = (e) => {
+            e.stopPropagation();
+            setShowMenu(!showMenu);
+        };
+      
+        const getDisplay = () => {
+            if (selectedValue) {
+                return selectedValue.label;
+            }
+            return placeHolder;
+        };
+      
+        const onItemClick = (option) => {
+            setSelectedValue(option);
+            securityRounds = option.value;
+            setPostData({ ...postData, securityLevels: option.value });
+        }
+      
+        const isSelected = (option) => {
+            if(!selectedValue) {
+                return false;
+            }
+        
+            return selectedValue.value ===option.value;
+        };
+      
+        return (
+            <div className="dropdown-container">
+                <div onClick={handleInputClick} className="dropdown-input">
+                <div className="dropdown-selected-value">{getDisplay()}</div>
+                <div className="dropdown-tools">
+                    <div className="dropdown-tool">
+                    <Icon />
+                    </div>
+                </div>
+                </div>
+                {showMenu && (
+                <div className="dropdown-menu">
+                    {options.map((option) => (
+                    <div 
+                        onClick={() => onItemClick(option)}
+                        key={option.value}
+                        className={`dropdown-item ${isSelected(option) && "selected"}`}
+                    >
+                        {option.label}
+                    </div>
+                    ))}
+                </div>
+                )}
+            </div>
+        );
+    };
+    // --------------------------------------------------------------------------------------------------------------
+
 
     // --------------------------Select Target Position-------------------------------------------------------------
     var selectedPosition = 0;
@@ -70,7 +155,6 @@ const SignUpForm = ({ currentId, setCurrentId }) => {
         rowThree.push(12);
         rowThree.push(13);
         rowThree.push(14);
-        
 
         rowFour.push(15);
         rowFour.push(16);
@@ -93,7 +177,7 @@ const SignUpForm = ({ currentId, setCurrentId }) => {
         return puzzle;
     };
 
-    const ChoosePosition = () => {
+    const ChoosePosition1 = () => {
         const [puzzle, setPuzzle] = React.useState([]);
         const [complete, setComplete] = React.useState(false);
 
@@ -103,7 +187,215 @@ const SignUpForm = ({ currentId, setCurrentId }) => {
 
         const selectPosition = (x, y) => {
             selectedPosition = (x*5) + y;
-            setPostData({ ...postData, targetPosition: selectedPosition });
+            setPostData({ ...postData, targetPosition1: selectedPosition });
+            setComplete(true);
+        };
+
+        return (
+            <div className="Grid">
+                <div
+                    style={{
+                        display: "inline-block",
+                        backgroundColor: "darkgray",
+                        border: `5px solid ${"gray"}`,
+                        borderRadius: 5,
+                        padding: 5
+                    }}
+                >
+                    {puzzle.map((row, i) => (
+                        <div key={i} style={{ display: "flex" }}>
+                            {row.map((col, j) => {
+                                return (
+                                    <div class="positionBlocks"
+                                        key={`${i}-${j}`}
+                                        onClick={() => selectPosition(i, j)}
+                                        style={{
+                                            display: "flex", justifyContent: "center", alignItems: "center",
+                                            width: 60, height: 60, margin: 2,
+                                            borderRadius: 5, userSelect: "none",
+                                            cursor: complete ? "not-allowed" : "pointer",
+                                        }}
+                                    >
+                                        <span style={{ fontSize: "2rem", fontWeight: "bold" }}>
+                                            {col}
+                                        </span>
+                                    </div>
+                                );
+                            })}
+                        </div>
+                    ))}
+                </div>
+            </div>
+        );
+    }
+
+    const ChoosePosition2 = () => {
+        const [puzzle, setPuzzle] = React.useState([]);
+        const [complete, setComplete] = React.useState(false);
+
+        React.useEffect(() => {
+            setPuzzle(getPuzzle());
+        }, []);
+
+        const selectPosition = (x, y) => {
+            selectedPosition = (x*5) + y;
+            setPostData({ ...postData, targetPosition2: selectedPosition });
+            setComplete(true);
+        };
+
+        return (
+            <div className="Grid">
+                <div
+                    style={{
+                        display: "inline-block",
+                        backgroundColor: "darkgray",
+                        border: `5px solid ${"gray"}`,
+                        borderRadius: 5,
+                        padding: 5
+                    }}
+                >
+                    {puzzle.map((row, i) => (
+                        <div key={i} style={{ display: "flex" }}>
+                            {row.map((col, j) => {
+                                return (
+                                    <div class="positionBlocks"
+                                        key={`${i}-${j}`}
+                                        onClick={() => selectPosition(i, j)}
+                                        style={{
+                                            display: "flex", justifyContent: "center", alignItems: "center",
+                                            width: 60, height: 60, margin: 2,
+                                            borderRadius: 5, userSelect: "none",
+                                            cursor: complete ? "not-allowed" : "pointer",
+                                        }}
+                                    >
+                                        <span style={{ fontSize: "2rem", fontWeight: "bold" }}>
+                                            {col}
+                                        </span>
+                                    </div>
+                                );
+                            })}
+                        </div>
+                    ))}
+                </div>
+            </div>
+        );
+    }
+
+    const ChoosePosition3 = () => {
+        const [puzzle, setPuzzle] = React.useState([]);
+        const [complete, setComplete] = React.useState(false);
+
+        React.useEffect(() => {
+            setPuzzle(getPuzzle());
+        }, []);
+
+        const selectPosition = (x, y) => {
+            selectedPosition = (x*5) + y;
+            setPostData({ ...postData, targetPosition3: selectedPosition });
+            setComplete(true);
+        };
+
+        return (
+            <div className="Grid">
+                <div
+                    style={{
+                        display: "inline-block",
+                        backgroundColor: "darkgray",
+                        border: `5px solid ${"gray"}`,
+                        borderRadius: 5,
+                        padding: 5
+                    }}
+                >
+                    {puzzle.map((row, i) => (
+                        <div key={i} style={{ display: "flex" }}>
+                            {row.map((col, j) => {
+                                return (
+                                    <div class="positionBlocks"
+                                        key={`${i}-${j}`}
+                                        onClick={() => selectPosition(i, j)}
+                                        style={{
+                                            display: "flex", justifyContent: "center", alignItems: "center",
+                                            width: 60, height: 60, margin: 2,
+                                            borderRadius: 5, userSelect: "none",
+                                            cursor: complete ? "not-allowed" : "pointer",
+                                        }}
+                                    >
+                                        <span style={{ fontSize: "2rem", fontWeight: "bold" }}>
+                                            {col}
+                                        </span>
+                                    </div>
+                                );
+                            })}
+                        </div>
+                    ))}
+                </div>
+            </div>
+        );
+    }
+
+    const ChoosePosition4 = () => {
+        const [puzzle, setPuzzle] = React.useState([]);
+        const [complete, setComplete] = React.useState(false);
+
+        React.useEffect(() => {
+            setPuzzle(getPuzzle());
+        }, []);
+
+        const selectPosition = (x, y) => {
+            selectedPosition = (x*5) + y;
+            setPostData({ ...postData, targetPosition4: selectedPosition });
+            setComplete(true);
+        };
+
+        return (
+            <div className="Grid">
+                <div
+                    style={{
+                        display: "inline-block",
+                        backgroundColor: "darkgray",
+                        border: `5px solid ${"gray"}`,
+                        borderRadius: 5,
+                        padding: 5
+                    }}
+                >
+                    {puzzle.map((row, i) => (
+                        <div key={i} style={{ display: "flex" }}>
+                            {row.map((col, j) => {
+                                return (
+                                    <div class="positionBlocks"
+                                        key={`${i}-${j}`}
+                                        onClick={() => selectPosition(i, j)}
+                                        style={{
+                                            display: "flex", justifyContent: "center", alignItems: "center",
+                                            width: 60, height: 60, margin: 2,
+                                            borderRadius: 5, userSelect: "none",
+                                            cursor: complete ? "not-allowed" : "pointer",
+                                        }}
+                                    >
+                                        <span style={{ fontSize: "2rem", fontWeight: "bold" }}>
+                                            {col}
+                                        </span>
+                                    </div>
+                                );
+                            })}
+                        </div>
+                    ))}
+                </div>
+            </div>
+        );
+    }
+
+    const ChoosePosition5 = () => {
+        const [puzzle, setPuzzle] = React.useState([]);
+        const [complete, setComplete] = React.useState(false);
+
+        React.useEffect(() => {
+            setPuzzle(getPuzzle());
+        }, []);
+
+        const selectPosition = (x, y) => {
+            selectedPosition = (x*5) + y;
+            setPostData({ ...postData, targetPosition5: selectedPosition });
             setComplete(true);
         };
 
@@ -145,17 +437,7 @@ const SignUpForm = ({ currentId, setCurrentId }) => {
         );
     }
     // -------------------------------------------------------------------------------------------------------------
-   
 
-    //-------------------------DropDown-----------------------------------------------------------------------------
-    const options = [
-        { value: "1", label: "1 Security Level" },
-        { value: "2", label: "2 Security Levels" },
-        { value: "3", label: "3 Security Levels" },
-        { value: "4", label: "4 Security Levels" },
-        { value: "5", label: "5 Security Levels" }
-    ];
-    //---------------------------------------------------------------------------------------------------------------
 
 
     //-----------------------------Next-----------------------------------------------------------------------------
@@ -163,6 +445,7 @@ const SignUpForm = ({ currentId, setCurrentId }) => {
         setShowForm(false);
         if(securityRounds === 1){
             setLastLevel(true);
+            setLevel1(true);
         }
         else{
             setShowLevels(true);
@@ -175,6 +458,7 @@ const SignUpForm = ({ currentId, setCurrentId }) => {
         if(securityRounds === 1){
             setLevel1(false);
             setLastLevel(true);
+            setLevel2(true);
         }
         else{
             setLevel1(false);
@@ -187,6 +471,7 @@ const SignUpForm = ({ currentId, setCurrentId }) => {
         if(securityRounds === 1){
             setLevel2(false);
             setLastLevel(true);
+            setLevel3(true);
         }
         else{
             setLevel2(false);
@@ -199,6 +484,7 @@ const SignUpForm = ({ currentId, setCurrentId }) => {
         if(securityRounds === 1){
             setLevel3(false);
             setLastLevel(true);
+            setLevel4(true);
         }
         else{
             setLevel3(false);
@@ -211,6 +497,7 @@ const SignUpForm = ({ currentId, setCurrentId }) => {
         if(securityRounds === 1){
             setLevel4(false);
             setLastLevel(true);
+            setLevel5(true);
         }
         else{
             setLevel4(false);
@@ -220,14 +507,7 @@ const SignUpForm = ({ currentId, setCurrentId }) => {
     }
 
     const onNextFive = () => {
-        if(securityRounds === 1){
-            setLevel5(false);
-            setLastLevel(true);
-        }
-        else{
-            setLevel5(false);
-            securityRounds = securityRounds - 1;
-        }
+        // Will never be called as maximum security levels = 5
     }
 
     const [showLevels, setShowLevels] = useState(false);
@@ -244,54 +524,50 @@ const SignUpForm = ({ currentId, setCurrentId }) => {
                 {level1 && (<Paper className={classes.paperOnNext}>
                     <form autoComplete="off" noValidate className={`${classes.rootOnNext} ${classes.formOnNext}`} >
                         <Typography variant="h6">Secure Authentication Level 1</Typography>
-                        <div className={classes.fileInputOnNext}> <FileBase type="file" multiple={false} onDone={({base64}) => setPostData({ ...postData, selectedFile: base64 })} /> </div>
-                        <ChoosePosition />
-                        <Button className={classes.buttonSubmitOnNext} variant="contained" color="primary" size="large" onClick={onNextOne} fullWidth>Next</Button>
+                        <div className={classes.fileInputOnNext}> <FileBase type="file" multiple={false} onDone={({base64}) => setPostData({ ...postData, selectedFile1: base64 })} /> </div>
+                        <ChoosePosition1 />
+                        {!lastLevel && (<Button className={classes.buttonSubmitOnNext} variant="contained" color="primary" size="large" onClick={onNextOne} fullWidth>Next</Button>)}
+                        {lastLevel && (<Button className={classes.buttonSubmitOnNext} variant="contained" color="primary" size="large" onClick={handleSubmit} fullWidth>Submit</Button>)}
                     </form>
                 </Paper>)}
 
                 {level2 && (<Paper className={classes.paperOnNext}>
                     <form autoComplete="off" noValidate className={`${classes.rootOnNext} ${classes.formOnNext}`} >
                         <Typography variant="h6">Secure Authentication Level 2</Typography>
-                        <div className={classes.fileInputOnNext}> <FileBase type="file" multiple={false} onDone={({base64}) => setPostData({ ...postData, selectedFile: base64 })} /> </div>
-                        <ChoosePosition />
-                        <Button className={classes.buttonSubmitOnNext} variant="contained" color="primary" size="large" onClick={onNextTwo} fullWidth>Next</Button>
+                        <div className={classes.fileInputOnNext}> <FileBase type="file" multiple={false} onDone={({base64}) => setPostData({ ...postData, selectedFile2: base64 })} /> </div>
+                        <ChoosePosition2 />
+                        {!lastLevel && (<Button className={classes.buttonSubmitOnNext} variant="contained" color="primary" size="large" onClick={onNextTwo} fullWidth>Next</Button>)}
+                        {lastLevel && (<Button className={classes.buttonSubmitOnNext} variant="contained" color="primary" size="large" onClick={handleSubmit} fullWidth>Submit</Button>)}
                     </form>
                 </Paper>)}
 
                 {level3 && (<Paper className={classes.paperOnNext}>
                     <form autoComplete="off" noValidate className={`${classes.rootOnNext} ${classes.formOnNext}`} >
                         <Typography variant="h6">Secure Authentication Level 3</Typography>
-                        <div className={classes.fileInputOnNext}> <FileBase type="file" multiple={false} onDone={({base64}) => setPostData({ ...postData, selectedFile: base64 })} /> </div>
-                        <ChoosePosition />
-                        <Button className={classes.buttonSubmitOnNext} variant="contained" color="primary" size="large" onClick={onNextThree} fullWidth>Next</Button>
+                        <div className={classes.fileInputOnNext}> <FileBase type="file" multiple={false} onDone={({base64}) => setPostData({ ...postData, selectedFile3: base64 })} /> </div>
+                        <ChoosePosition3 />
+                        {!lastLevel && (<Button className={classes.buttonSubmitOnNext} variant="contained" color="primary" size="large" onClick={onNextThree} fullWidth>Next</Button>)}
+                        {lastLevel && (<Button className={classes.buttonSubmitOnNext} variant="contained" color="primary" size="large" onClick={handleSubmit} fullWidth>Submit</Button>)}
                     </form>
                 </Paper>)}
 
                 {level4 && (<Paper className={classes.paperOnNext}>
                     <form autoComplete="off" noValidate className={`${classes.rootOnNext} ${classes.formOnNext}`} >
                         <Typography variant="h6">Secure Authentication Level 4</Typography>
-                        <div className={classes.fileInputOnNext}> <FileBase type="file" multiple={false} onDone={({base64}) => setPostData({ ...postData, selectedFile: base64 })} /> </div>
-                        <ChoosePosition />
-                        <Button className={classes.buttonSubmitOnNext} variant="contained" color="primary" size="large" onClick={onNextFour} fullWidth>Next</Button>
+                        <div className={classes.fileInputOnNext}> <FileBase type="file" multiple={false} onDone={({base64}) => setPostData({ ...postData, selectedFile4: base64 })} /> </div>
+                        <ChoosePosition4 />
+                        {!lastLevel && (<Button className={classes.buttonSubmitOnNext} variant="contained" color="primary" size="large" onClick={onNextFour} fullWidth>Next</Button>)}
+                        {lastLevel && (<Button className={classes.buttonSubmitOnNext} variant="contained" color="primary" size="large" onClick={handleSubmit} fullWidth>Submit</Button>)}
                     </form>
                 </Paper>)}
 
                 {level5 && (<Paper className={classes.paperOnNext}>
                     <form autoComplete="off" noValidate className={`${classes.rootOnNext} ${classes.formOnNext}`} >
                         <Typography variant="h6">Secure Authentication Level 5</Typography>
-                        <div className={classes.fileInputOnNext}> <FileBase type="file" multiple={false} onDone={({base64}) => setPostData({ ...postData, selectedFile: base64 })} /> </div>
-                        <ChoosePosition />
-                        <Button className={classes.buttonSubmitOnNext} variant="contained" color="primary" size="large" onClick={onNextFive} fullWidth>Next</Button>
-                    </form>
-                </Paper>)}
-
-                {lastLevel && (<Paper className={classes.paperOnNext}>
-                    <form autoComplete="off" noValidate className={`${classes.rootOnNext} ${classes.formOnNext}`} >
-                        <Typography variant="h6">Secure Authentication Last Level</Typography>
-                        <div className={classes.fileInputOnNext}> <FileBase type="file" multiple={false} onDone={({base64}) => setPostData({ ...postData, selectedFile: base64 })} /> </div>
-                        <ChoosePosition />
-                        <Button className={classes.buttonSubmitOnNext} variant="contained" color="primary" size="large" onClick={handleSubmit} fullWidth>Submit</Button>
+                        <div className={classes.fileInputOnNext}> <FileBase type="file" multiple={false} onDone={({base64}) => setPostData({ ...postData, selectedFile5: base64 })} /> </div>
+                        <ChoosePosition5 />
+                        {!lastLevel && (<Button className={classes.buttonSubmitOnNext} variant="contained" color="primary" size="large" onClick={onNextFive} fullWidth>Next</Button>)}
+                        {lastLevel && (<Button className={classes.buttonSubmitOnNext} variant="contained" color="primary" size="large" onClick={handleSubmit} fullWidth>Submit</Button>)}
                     </form>
                 </Paper>)}
             </div>
