@@ -44,6 +44,8 @@ const SignUpForm = ({ currentId, setCurrentId }) => {
 
 
     // ------------------------------------------DropDown------------------------------------------------------------
+    const [selectedValue, setSelectedValue] = useState(null);
+    
     const options = [
         { value: "1", label: "1 Security Level" },
         { value: "2", label: "2 Security Levels" },
@@ -62,7 +64,6 @@ const SignUpForm = ({ currentId, setCurrentId }) => {
       
     const DropDown = ({ placeHolder, options }) => {
         const [showMenu, setShowMenu] = useState(false);
-        const [selectedValue, setSelectedValue] = useState(null);
       
         useEffect(() => {
             const handler = () => setShowMenu(false);
@@ -86,7 +87,6 @@ const SignUpForm = ({ currentId, setCurrentId }) => {
       
         const onItemClick = (option) => {
             setSelectedValue(option);
-            console.log(selectedValue);
             securityRounds = option.value;
             setPostData({ ...postData, securityLevels: option.value });
         }
@@ -131,6 +131,12 @@ const SignUpForm = ({ currentId, setCurrentId }) => {
     // --------------------------Select Target Position-------------------------------------------------------------
     var selectedPosition = 0;
 
+    const [complete1, setComplete1] = React.useState(false);
+    const [complete2, setComplete2] = React.useState(false);
+    const [complete3, setComplete3] = React.useState(false);
+    const [complete4, setComplete4] = React.useState(false);
+    const [complete5, setComplete5] = React.useState(false);
+
     const getShuffledPuzzle = () => {
         const rowOne = [];
         const rowTwo = [];
@@ -167,7 +173,6 @@ const SignUpForm = ({ currentId, setCurrentId }) => {
         rowFive.push(22);
         rowFive.push(23);
         rowFive.push(24);
-
         
         return [rowOne, rowTwo, rowThree,rowFour,rowFive];
     };
@@ -179,7 +184,6 @@ const SignUpForm = ({ currentId, setCurrentId }) => {
 
     const ChoosePosition1 = () => {
         const [puzzle, setPuzzle] = React.useState([]);
-        const [complete, setComplete] = React.useState(false);
 
         React.useEffect(() => {
             setPuzzle(getPuzzle());
@@ -188,8 +192,7 @@ const SignUpForm = ({ currentId, setCurrentId }) => {
         const selectPosition = (x, y) => {
             selectedPosition = (x*5) + y;
             setPostData({ ...postData, targetPosition1: selectedPosition });
-            setComplete(true);
-            console.log(complete);
+            setComplete1(true);
         };
 
         return (
@@ -214,8 +217,9 @@ const SignUpForm = ({ currentId, setCurrentId }) => {
                                             display: "flex", justifyContent: "center", alignItems: "center",
                                             width: 60, height: 60, margin: 2,
                                             borderRadius: 5, userSelect: "none",
-                                            cursor: complete ? "not-allowed" : "pointer",
-                                            // backgroundColor: complete ? "blue" : "red",
+                                            // cursor: complete ? "not-allowed" : "pointer",
+                                            cursor: "pointer",
+                                            backgroundColor: (complete1 && (i*5+j) === postData.targetPosition1) ? "yellow" : "default",
                                         }}
                                     >
                                         <span style={{ fontSize: "2rem", fontWeight: "bold" }}>
@@ -233,7 +237,6 @@ const SignUpForm = ({ currentId, setCurrentId }) => {
 
     const ChoosePosition2 = () => {
         const [puzzle, setPuzzle] = React.useState([]);
-        const [complete, setComplete] = React.useState(false);
 
         React.useEffect(() => {
             setPuzzle(getPuzzle());
@@ -242,7 +245,7 @@ const SignUpForm = ({ currentId, setCurrentId }) => {
         const selectPosition = (x, y) => {
             selectedPosition = (x*5) + y;
             setPostData({ ...postData, targetPosition2: selectedPosition });
-            setComplete(true);
+            setComplete2(true);
         };
 
         return (
@@ -267,7 +270,8 @@ const SignUpForm = ({ currentId, setCurrentId }) => {
                                             display: "flex", justifyContent: "center", alignItems: "center",
                                             width: 60, height: 60, margin: 2,
                                             borderRadius: 5, userSelect: "none",
-                                            cursor: complete ? "not-allowed" : "pointer",
+                                            cursor: "pointer",
+                                            backgroundColor: (complete2 && (i*5+j) === postData.targetPosition2) ? "yellow" : "default",
                                         }}
                                     >
                                         <span style={{ fontSize: "2rem", fontWeight: "bold" }}>
@@ -285,7 +289,6 @@ const SignUpForm = ({ currentId, setCurrentId }) => {
 
     const ChoosePosition3 = () => {
         const [puzzle, setPuzzle] = React.useState([]);
-        const [complete, setComplete] = React.useState(false);
 
         React.useEffect(() => {
             setPuzzle(getPuzzle());
@@ -294,7 +297,7 @@ const SignUpForm = ({ currentId, setCurrentId }) => {
         const selectPosition = (x, y) => {
             selectedPosition = (x*5) + y;
             setPostData({ ...postData, targetPosition3: selectedPosition });
-            setComplete(true);
+            setComplete3(true);
         };
 
         return (
@@ -319,7 +322,8 @@ const SignUpForm = ({ currentId, setCurrentId }) => {
                                             display: "flex", justifyContent: "center", alignItems: "center",
                                             width: 60, height: 60, margin: 2,
                                             borderRadius: 5, userSelect: "none",
-                                            cursor: complete ? "not-allowed" : "pointer",
+                                            cursor: "pointer",
+                                            backgroundColor: (complete3 && (i*5+j) === postData.targetPosition3) ? "yellow" : "default",
                                         }}
                                     >
                                         <span style={{ fontSize: "2rem", fontWeight: "bold" }}>
@@ -337,7 +341,6 @@ const SignUpForm = ({ currentId, setCurrentId }) => {
 
     const ChoosePosition4 = () => {
         const [puzzle, setPuzzle] = React.useState([]);
-        const [complete, setComplete] = React.useState(false);
 
         React.useEffect(() => {
             setPuzzle(getPuzzle());
@@ -346,7 +349,7 @@ const SignUpForm = ({ currentId, setCurrentId }) => {
         const selectPosition = (x, y) => {
             selectedPosition = (x*5) + y;
             setPostData({ ...postData, targetPosition4: selectedPosition });
-            setComplete(true);
+            setComplete4(true);
         };
 
         return (
@@ -371,7 +374,8 @@ const SignUpForm = ({ currentId, setCurrentId }) => {
                                             display: "flex", justifyContent: "center", alignItems: "center",
                                             width: 60, height: 60, margin: 2,
                                             borderRadius: 5, userSelect: "none",
-                                            cursor: complete ? "not-allowed" : "pointer",
+                                            cursor: "pointer",
+                                            backgroundColor: (complete4 && (i*5+j) === postData.targetPosition4) ? "yellow" : "default",
                                         }}
                                     >
                                         <span style={{ fontSize: "2rem", fontWeight: "bold" }}>
@@ -389,7 +393,6 @@ const SignUpForm = ({ currentId, setCurrentId }) => {
 
     const ChoosePosition5 = () => {
         const [puzzle, setPuzzle] = React.useState([]);
-        const [complete, setComplete] = React.useState(false);
 
         React.useEffect(() => {
             setPuzzle(getPuzzle());
@@ -398,7 +401,7 @@ const SignUpForm = ({ currentId, setCurrentId }) => {
         const selectPosition = (x, y) => {
             selectedPosition = (x*5) + y;
             setPostData({ ...postData, targetPosition5: selectedPosition });
-            setComplete(true);
+            setComplete5(true);
         };
 
         return (
@@ -423,7 +426,8 @@ const SignUpForm = ({ currentId, setCurrentId }) => {
                                             display: "flex", justifyContent: "center", alignItems: "center",
                                             width: 60, height: 60, margin: 2,
                                             borderRadius: 5, userSelect: "none",
-                                            cursor: complete ? "not-allowed" : "pointer",
+                                            cursor: "pointer",
+                                            backgroundColor: (complete5 && (i*5+j) === postData.targetPosition5) ? "yellow" : "default",
                                         }}
                                     >
                                         <span style={{ fontSize: "2rem", fontWeight: "bold" }}>
