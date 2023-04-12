@@ -21,6 +21,28 @@ export default makeStyles((theme) => ({
   buttonSubmit: {
     marginTop: 10,
   },
+
+
+  rootOnNext: {
+    '& .MuiTextField-root': {
+      margin: theme.spacing(1),
+    },
+  },
+  paperOnNext: {
+    padding: theme.spacing(2),
+  },
+  formOnNext: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+  },
+  fileInputOnNext: {
+    width: '97%',
+    margin: '10px 0',
+  },
+  buttonSubmitOnNext: {
+    marginTop: 10,
+  },
 }));
 
 

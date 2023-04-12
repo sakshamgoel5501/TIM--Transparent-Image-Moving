@@ -6,9 +6,12 @@ import useStyles from './styles';
 import { createPost, updatePost } from '../../actions/posts';
 import Puzzle from '../Puzzle/Puzzle.js'
 import './layoutSignUp.css';
+import DropDown from "./DropDown.js";
+
+var securityRounds = 3;
 
 const SignUpForm = ({ currentId, setCurrentId }) => {
-    const [postData, setPostData] = useState({ username: '', selectedFile: '', targetPosition: 0 });
+    const [postData, setPostData] = useState({ username: '', selectedFile: '', targetPosition: 0, securityLevels: 1 });
     const post = useSelector((state) => (currentId ? state.posts.find((message) => message._id === currentId) : null));
     const dispatch = useDispatch();
     const classes = useStyles();
@@ -19,7 +22,7 @@ const SignUpForm = ({ currentId, setCurrentId }) => {
 
     const clear = () => {
         // setCurrentId(0);
-        setPostData({ username: '', selectedFile: '', targetPosition: 0 });
+        setPostData({ username: '', selectedFile: '', targetPosition: 0, securityLevels: 1 });
     }
 
     const handleSubmit = (e) => {
@@ -33,11 +36,11 @@ const SignUpForm = ({ currentId, setCurrentId }) => {
             clear();
         }
 
-        setShowImages(true);
-        setShowForm(false);
+        setShowAlert(true);
+        // setShowForm(false);
     }
 
-    const [showImages, setShowImages] = useState(false);
+    const [showAlert, setShowAlert] = useState(false);
     const [showForm, setShowForm] = useState(true);
 
     // --------------------------Select Target Position-------------------------------------------------------------
@@ -99,7 +102,7 @@ const SignUpForm = ({ currentId, setCurrentId }) => {
         }, []);
 
         const selectPosition = (x, y) => {
-            selectedPosition = (x*3) + y;
+            selectedPosition = (x*5) + y;
             setPostData({ ...postData, targetPosition: selectedPosition });
             setComplete(true);
         };
@@ -124,7 +127,7 @@ const SignUpForm = ({ currentId, setCurrentId }) => {
                                         onClick={() => selectPosition(i, j)}
                                         style={{
                                             display: "flex", justifyContent: "center", alignItems: "center",
-                                            width: 85, height: 85, margin: 2,
+                                            width: 60, height: 60, margin: 2,
                                             borderRadius: 5, userSelect: "none",
                                             cursor: complete ? "not-allowed" : "pointer",
                                         }}
@@ -143,20 +146,175 @@ const SignUpForm = ({ currentId, setCurrentId }) => {
     }
     // -------------------------------------------------------------------------------------------------------------
    
+
+    //-------------------------DropDown-----------------------------------------------------------------------------
+    const options = [
+        { value: "1", label: "1 Security Level" },
+        { value: "2", label: "2 Security Levels" },
+        { value: "3", label: "3 Security Levels" },
+        { value: "4", label: "4 Security Levels" },
+        { value: "5", label: "5 Security Levels" }
+    ];
+    //---------------------------------------------------------------------------------------------------------------
+
+
+    //-----------------------------Next-----------------------------------------------------------------------------
+    const onNext = () => {
+        setShowForm(false);
+        if(securityRounds === 1){
+            setLastLevel(true);
+        }
+        else{
+            setShowLevels(true);
+            setLevel1(true);
+            securityRounds = securityRounds - 1;
+        }
+    }
+
+    const onNextOne = () => {
+        if(securityRounds === 1){
+            setLevel1(false);
+            setLastLevel(true);
+        }
+        else{
+            setLevel1(false);
+            setLevel2(true);
+            securityRounds = securityRounds - 1;
+        }
+    }
+
+    const onNextTwo = () => {
+        if(securityRounds === 1){
+            setLevel2(false);
+            setLastLevel(true);
+        }
+        else{
+            setLevel2(false);
+            setLevel3(true);
+            securityRounds = securityRounds - 1;
+        }
+    }
+
+    const onNextThree = () => {
+        if(securityRounds === 1){
+            setLevel3(false);
+            setLastLevel(true);
+        }
+        else{
+            setLevel3(false);
+            setLevel4(true);
+            securityRounds = securityRounds - 1;
+        }
+    }
+
+    const onNextFour = () => {
+        if(securityRounds === 1){
+            setLevel4(false);
+            setLastLevel(true);
+        }
+        else{
+            setLevel4(false);
+            setLevel5(true);
+            securityRounds = securityRounds - 1;
+        }
+    }
+
+    const onNextFive = () => {
+        if(securityRounds === 1){
+            setLevel5(false);
+            setLastLevel(true);
+        }
+        else{
+            setLevel5(false);
+            securityRounds = securityRounds - 1;
+        }
+    }
+
+    const [showLevels, setShowLevels] = useState(false);
+    const [level1, setLevel1] = useState(false);
+    const [level2, setLevel2] = useState(false);
+    const [level3, setLevel3] = useState(false);
+    const [level4, setLevel4] = useState(false);
+    const [level5, setLevel5] = useState(false);
+    const [lastLevel, setLastLevel] = useState(false);
+
+    const Next = () => {
+        return (
+            <div>
+                {level1 && (<Paper className={classes.paperOnNext}>
+                    <form autoComplete="off" noValidate className={`${classes.rootOnNext} ${classes.formOnNext}`} >
+                        <Typography variant="h6">Secure Authentication Level 1</Typography>
+                        <div className={classes.fileInputOnNext}> <FileBase type="file" multiple={false} onDone={({base64}) => setPostData({ ...postData, selectedFile: base64 })} /> </div>
+                        <ChoosePosition />
+                        <Button className={classes.buttonSubmitOnNext} variant="contained" color="primary" size="large" onClick={onNextOne} fullWidth>Next</Button>
+                    </form>
+                </Paper>)}
+
+                {level2 && (<Paper className={classes.paperOnNext}>
+                    <form autoComplete="off" noValidate className={`${classes.rootOnNext} ${classes.formOnNext}`} >
+                        <Typography variant="h6">Secure Authentication Level 2</Typography>
+                        <div className={classes.fileInputOnNext}> <FileBase type="file" multiple={false} onDone={({base64}) => setPostData({ ...postData, selectedFile: base64 })} /> </div>
+                        <ChoosePosition />
+                        <Button className={classes.buttonSubmitOnNext} variant="contained" color="primary" size="large" onClick={onNextTwo} fullWidth>Next</Button>
+                    </form>
+                </Paper>)}
+
+                {level3 && (<Paper className={classes.paperOnNext}>
+                    <form autoComplete="off" noValidate className={`${classes.rootOnNext} ${classes.formOnNext}`} >
+                        <Typography variant="h6">Secure Authentication Level 3</Typography>
+                        <div className={classes.fileInputOnNext}> <FileBase type="file" multiple={false} onDone={({base64}) => setPostData({ ...postData, selectedFile: base64 })} /> </div>
+                        <ChoosePosition />
+                        <Button className={classes.buttonSubmitOnNext} variant="contained" color="primary" size="large" onClick={onNextThree} fullWidth>Next</Button>
+                    </form>
+                </Paper>)}
+
+                {level4 && (<Paper className={classes.paperOnNext}>
+                    <form autoComplete="off" noValidate className={`${classes.rootOnNext} ${classes.formOnNext}`} >
+                        <Typography variant="h6">Secure Authentication Level 4</Typography>
+                        <div className={classes.fileInputOnNext}> <FileBase type="file" multiple={false} onDone={({base64}) => setPostData({ ...postData, selectedFile: base64 })} /> </div>
+                        <ChoosePosition />
+                        <Button className={classes.buttonSubmitOnNext} variant="contained" color="primary" size="large" onClick={onNextFour} fullWidth>Next</Button>
+                    </form>
+                </Paper>)}
+
+                {level5 && (<Paper className={classes.paperOnNext}>
+                    <form autoComplete="off" noValidate className={`${classes.rootOnNext} ${classes.formOnNext}`} >
+                        <Typography variant="h6">Secure Authentication Level 5</Typography>
+                        <div className={classes.fileInputOnNext}> <FileBase type="file" multiple={false} onDone={({base64}) => setPostData({ ...postData, selectedFile: base64 })} /> </div>
+                        <ChoosePosition />
+                        <Button className={classes.buttonSubmitOnNext} variant="contained" color="primary" size="large" onClick={onNextFive} fullWidth>Next</Button>
+                    </form>
+                </Paper>)}
+
+                {lastLevel && (<Paper className={classes.paperOnNext}>
+                    <form autoComplete="off" noValidate className={`${classes.rootOnNext} ${classes.formOnNext}`} >
+                        <Typography variant="h6">Secure Authentication Last Level</Typography>
+                        <div className={classes.fileInputOnNext}> <FileBase type="file" multiple={false} onDone={({base64}) => setPostData({ ...postData, selectedFile: base64 })} /> </div>
+                        <ChoosePosition />
+                        <Button className={classes.buttonSubmitOnNext} variant="contained" color="primary" size="large" onClick={handleSubmit} fullWidth>Submit</Button>
+                    </form>
+                </Paper>)}
+            </div>
+        );
+    }
+    //---------------------------------------------------------------------------------------------------------------
+
+
     return (
         <div>
             {showForm && (<Paper className={classes.paper}>
                 <form autoComplete="off" noValidate className={`${classes.root} ${classes.form}`} onSubmit={handleSubmit}>
                     <Typography variant="h6">Secure Authentication</Typography>
                     <TextField name="username" variant="outlined" label="Username" fullWidth value={postData.username} onChange={(e) => setPostData({ ...postData, username: e.target.value })} />
-                    <div className={classes.fileInput}> <FileBase type="file" multiple={true} onDone={({base64}) => setPostData({ ...postData, selectedFile: base64 })} /> </div>
-                    {/* <ChoosePosition name="targetPosition" value={postData.targetPosition} onChange={() => setPostData({ ...postData, targetPosition: selectedPosition })} /> */}
-                    <ChoosePosition />
-                    <Button className={classes.buttonSubmit} variant="contained" color="primary" size="large" type="submit" fullWidth>Submit</Button>
+                    <DropDown placeHolder="Security Levels" options={options} />
+                    <Button className={classes.buttonSubmit} variant="contained" color="primary" size="large" onClick={onNext} fullWidth>Next</Button>
+                    {/* <Button className={classes.buttonSubmit} variant="contained" color="primary" size="large" type="submit" fullWidth>Submit</Button> */}
                 </form>
             </Paper>)}
+
+            {showLevels && <Next />}
         
-            {showImages && (alert("Signed Up Successfully !!"))}
+            {showAlert && (alert("Signed Up Successfully !!"))}
         </div>
     );
 }
