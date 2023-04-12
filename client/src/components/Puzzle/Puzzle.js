@@ -166,7 +166,7 @@ export default function Grid() {
 
             setMoves(moves + 1);
 
-            if(moves === 25) {
+            if(moves === 20) {
                 doRetry(true);
                 alert("Too many invalid attempts : Please try again !!");             
             }
@@ -197,7 +197,7 @@ export default function Grid() {
 
             setMoves(moves + 1);
 
-            if(moves === 25) {
+            if(moves === 20) {
                 doRetry(true);
                 alert("Too many invalid attempts : Please try again !!");
             }
@@ -225,7 +225,7 @@ export default function Grid() {
 
             setMoves(moves + 1);
 
-            if(moves === 25) {
+            if(moves === 20) {
                 doRetry(true);
                 alert("Too many invalid attempts : Please try again !!");
             }
@@ -256,7 +256,7 @@ export default function Grid() {
 
             setMoves(moves + 1);
 
-            if(moves === 25) {
+            if(moves === 20) {
                 doRetry(true);
                 alert("Too many invalid attempts : Please try again !!");
             }
