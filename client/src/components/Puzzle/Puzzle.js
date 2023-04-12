@@ -34,12 +34,33 @@ var urls = [first, second, third, fourth, fifth, sixth, seventh, eight, ninth, t
 
 const password = "XXXXXIXXX";
 //take Image as tile with number 6
+var target1 =0;
+var target2 =1;
+var target3=2;
+var target4=3;
+var target5=4
+
+var targetImage1=0;
+var targetImage2=1;
+var targetImage2=2;
+var targetImage4=3;
+var targetImage5=4;
 
 var designatedPositionX = 1;
 var designatedPositionY = 1;
 
 var passwordImageX = 0;
 var passwordImageY = 0;
+var passwordImageX5 = 0;
+var passwordImageY5 = 0;
+var passwordImageX2 = 0;
+var passwordImageY2 = 0;
+var passwordImageX3 = 0;
+var passwordImageY3 = 0;
+var passwordImageX4 = 0;
+var passwordImageY4 = 0;
+const targetURL=[5,9,13,2,4]
+const designatedURL=[0,6,12,18,9]
 
 var n = 0;
 // const response = await fetch(`http://localhost:5000/`)
@@ -53,7 +74,6 @@ const getShuffledPuzzle = () => {
     const rowThree = [];
     const rowFour=[];
     const rowFive=[];
-
     n = Math.sqrt(values.length);
 
     while (values.length) {
@@ -89,10 +109,26 @@ const getPuzzle = () => {
 
     for(var i=0 ; i<n ; i++){
         for(var j=0 ; j<n ; j++){
-            console.log(puzzle[i][j])
-            if(puzzle[i][j] === 6){
+            //console.log(puzzle[i][j])
+            if(puzzle[i][j] === targetImage1){
                 passwordImageX = i;
                 passwordImageY = j;
+            }
+            if(puzzle[i][j] === targetImage2){
+                passwordImageX2 = i;
+                passwordImageY2 = j;
+            }
+            if(puzzle[i][j] === targetImage1){
+                passwordImageX3 = i;
+                passwordImageY3 = j;
+            }
+            if(puzzle[i][j] === targetImage1){
+                passwordImageX4 = i;
+                passwordImageY4 = j;
+            }
+            if(puzzle[i][j] === targetImage1){
+                passwordImageX5 = i;
+                passwordImageY5 = j;
             }
         }
     }
@@ -104,9 +140,9 @@ export default function Grid() {
     const [puzzle, setPuzzle] = React.useState([]);
     const [complete, setComplete] = React.useState(false);
     const [moves, setMoves] = React.useState(0);
-
+    const [col,setCol]=React.useState(0);
     const [retry, doRetry] = React.useState(false);
-
+    const [targetposition,setTargetposition]= React.useState(targetURL[0]);
     React.useEffect(() => {
         setPuzzle(getPuzzle());
     }, []);
@@ -130,7 +166,7 @@ export default function Grid() {
 
             setMoves(moves + 1);
 
-            if(moves === 7) {
+            if(moves === 25) {
                 doRetry(true);
                 alert("Too many invalid attempts : Please try again !!");             
             }
@@ -161,7 +197,7 @@ export default function Grid() {
 
             setMoves(moves + 1);
 
-            if(moves === 7) {
+            if(moves === 25) {
                 doRetry(true);
                 alert("Too many invalid attempts : Please try again !!");
             }
@@ -189,7 +225,7 @@ export default function Grid() {
 
             setMoves(moves + 1);
 
-            if(moves === 7) {
+            if(moves === 25) {
                 doRetry(true);
                 alert("Too many invalid attempts : Please try again !!");
             }
@@ -220,7 +256,7 @@ export default function Grid() {
 
             setMoves(moves + 1);
 
-            if(moves === 7) {
+            if(moves === 25) {
                 doRetry(true);
                 alert("Too many invalid attempts : Please try again !!");
             }
@@ -231,9 +267,20 @@ export default function Grid() {
 
     const checkCompletion = puzzle => {
         // We need to make it equal to "X X X X X I X X X"
-        const checkIdx = (designatedPositionX * n) + designatedPositionY;
-        if (flattenArray(puzzle).join("")[checkIdx] === '5') {
-            setComplete(true);
+        const checkIdx = designatedURL[col];
+        //console.log(checkIdx)
+        //console.log(targetposition);
+        //console.log(urls[checkidx]);
+        console.log(flattenArray(puzzle).join("")[checkIdx]);
+        console.log(flattenArray(puzzle).join("/"));
+        console.log(flattenArray(puzzle).join("")[checkIdx]);
+        if (flattenArray(puzzle)[checkIdx] === targetURL[col]) {
+            setCol(col+1);
+            console.log(targetposition);
+            setTargetposition(targetURL[col]);
+            alert(`Column No. ${col+1} completed`);
+            if(col===4)
+                setComplete(true);
         }
     };
 
@@ -260,6 +307,7 @@ export default function Grid() {
                     <div key={i} style={{ display: "flex" }}>
                         {row.map((col, j) => {
                             const color = "lightgray";
+                            //console.log(col);
                             return (
                                 <div
                                     key={`${i}-${j}`}
@@ -279,6 +327,7 @@ export default function Grid() {
                                         {col}
                                     </span> */}
                                     <span class="my-span" style={{ backgroundImage: `url(${urls[col]})`}}> </span>
+                                    
                                 </div>
                             );
                         })}
