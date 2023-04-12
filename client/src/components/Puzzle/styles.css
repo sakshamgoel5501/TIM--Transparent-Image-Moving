@@ -1,6 +1,7 @@
 .Grid {
     font-family: sans-serif;
     text-align: center;
+    align-self: auto;
 }
 
 .up {
