@@ -13,23 +13,24 @@ import sixth from './Images/6.png'
 import seventh from './Images/7.png'
 import eight from './Images/8.png'
 import ninth from './Images/9.png'
-import tenth from './Images/10.jpeg'
-import eleventh from './Images/11.jpeg'
-import twelvth from './Images/12.jpeg'
-import thirteen from './Images/13.jpeg'
-import fourteen from './Images/14.jpeg'
-import fifteen from './Images/15.jpeg'
-import sixteen from './Images/16.jpeg'
-import seventeen from './Images/17.jpeg'
-import eighteen from './Images/18.jpeg'
-import nineteen from './Images/19.jpeg'
-import twenty from './Images/10.jpeg'
-import twentyone from './Images/21.jpeg'
-import twentytwo from './Images/22.jpeg'
-import twentythree from './Images/23.jpeg'
-import twnetyfour from './Images/24.jpeg'
+import tenth from './Images/10.png'
+import eleventh from './Images/11.png'
+import twelvth from './Images/12.png'
+import thirteen from './Images/13.png'
+import fourteen from './Images/14.png'
+import fifteen from './Images/15.png'
+import sixteen from './Images/16.png'
+import seventeen from './Images/17.png'
+import eighteen from './Images/18.png'
+import nineteen from './Images/19.png'
+import twenty from './Images/20.png'
+import twentyone from './Images/21.png'
+import twentytwo from './Images/22.png'
+import twentythree from './Images/23.png'
+import twnetyfour from './Images/24.png'
+import twentyfive from './Images/25.png'
 
-var urls = [first, second, third, fourth, fifth, sixth, seventh, eight, ninth,tenth,eleventh,twelvth,thirteen,fourteen,fifteen,sixteen,seventeen,eighteen,nineteen,twenty,twentyone,twentytwo,twentythree,twnetyfour];
+var urls = [first, second, third, fourth, fifth, sixth, seventh, eight, ninth, tenth, eleventh, twelvth, thirteen, fourteen, fifteen, sixteen, seventeen, eighteen, nineteen, twenty, twentyone, twentytwo, twentythree, twnetyfour, twentyfive];
 
 const password = "XXXXXIXXX";
 //take Image as tile with number 6
@@ -41,11 +42,11 @@ var passwordImageX = 0;
 var passwordImageY = 0;
 
 var n = 0;
-//const response = await fetch(`http://localhost:5000/`)
-//console.log(response)
+// const response = await fetch(`http://localhost:5000/`)
+// console.log(response)
 // Grid of size (n X n).
 const getShuffledPuzzle = () => {
-    const values = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 , 13 ,14,15,16,17,18,19,20,21,22,23,24];
+    const values = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24];
 
     const rowOne = [];
     const rowTwo = [];
@@ -91,9 +92,6 @@ const getPuzzle = () => {
             console.log(puzzle[i][j])
             if(puzzle[i][j] === 6){
                 passwordImageX = i;
-                console.log("Hey")
-                console.log(passwordImageX)
-                console.log(passwordImageY)
                 passwordImageY = j;
             }
         }

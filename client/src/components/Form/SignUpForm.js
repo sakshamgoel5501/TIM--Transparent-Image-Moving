@@ -4,7 +4,6 @@ import FileBase from 'react-file-base64';
 import { useDispatch, useSelector } from 'react-redux';
 import useStyles from './styles';
 import { createPost, updatePost } from '../../actions/posts';
-import Puzzle from '../Puzzle/Puzzle.js'
 import './layoutSignUp.css';
 import "./DropDown.css";
 
@@ -52,7 +51,7 @@ const SignUpForm = ({ currentId, setCurrentId }) => {
         { value: "4", label: "4 Security Levels" },
         { value: "5", label: "5 Security Levels" }
     ];
-    
+
     const Icon = () => {
         return (
             <svg height="20" width="20" viewBox="0 0 20 20">
@@ -87,6 +86,7 @@ const SignUpForm = ({ currentId, setCurrentId }) => {
       
         const onItemClick = (option) => {
             setSelectedValue(option);
+            console.log(selectedValue);
             securityRounds = option.value;
             setPostData({ ...postData, securityLevels: option.value });
         }
@@ -105,7 +105,7 @@ const SignUpForm = ({ currentId, setCurrentId }) => {
                 <div className="dropdown-selected-value">{getDisplay()}</div>
                 <div className="dropdown-tools">
                     <div className="dropdown-tool">
-                    <Icon />
+                        <Icon />
                     </div>
                 </div>
                 </div>
@@ -189,6 +189,7 @@ const SignUpForm = ({ currentId, setCurrentId }) => {
             selectedPosition = (x*5) + y;
             setPostData({ ...postData, targetPosition1: selectedPosition });
             setComplete(true);
+            console.log(complete);
         };
 
         return (
@@ -214,6 +215,7 @@ const SignUpForm = ({ currentId, setCurrentId }) => {
                                             width: 60, height: 60, margin: 2,
                                             borderRadius: 5, userSelect: "none",
                                             cursor: complete ? "not-allowed" : "pointer",
+                                            // backgroundColor: complete ? "blue" : "red",
                                         }}
                                     >
                                         <span style={{ fontSize: "2rem", fontWeight: "bold" }}>

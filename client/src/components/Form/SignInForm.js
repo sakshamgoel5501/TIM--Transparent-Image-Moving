@@ -48,7 +48,7 @@ const SignInForm = ({ currentId, setCurrentId }) => {
                <Typography variant="h6">Secure Authentication</Typography>
                <TextField name="username" variant="outlined" label="Username" fullWidth value={postData.username}onChange={(e) => setPostData({ ...postData, username: e.target.value })} />
                <Button className={classes.buttonSubmit} variant="contained" color="primary" size="large" type="submit" onClick={handleClickSubmit} fullWidth>Submit</Button>
-               <Button variant="contained" color="secondary" size="small" onClick={clear} fullWidth>Clear</Button>
+               {/* <Button variant="contained" color="secondary" size="small" onClick={clear} fullWidth>Clear</Button> */}
             </form>
          </Paper>)}
 
